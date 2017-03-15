@@ -1,0 +1,34 @@
+
+monolog:
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: error
+
+
+swarrot:
+    provider: amqp_lib
+    default_connection: rabbitmq
+    default_command: swarrot.command.base
+    connections:
+        rabbitmq:
+            host: rabbitmq
+            port: 5672 # 15672
+            login: rbu
+            password: rbp
+            vhost: '/'
+    consumers:
+        test_consume_quickly: # name of the consumer
+            processor: processor.test_consume_quickly # name of the service
+            extras:
+                poll_interval: 500000
+                requeue_on_error: false
+            middleware_stack:
+                - configurator: swarrot.processor.exception_catcher
+                - configurator: swarrot.processor.ack
+    messages_types:
+        my_publisher:
+            connection: rabbitmq # use the default connection by default
+            exchange: rabbit_exchange
+            routing_key: rabbit_exchange_key

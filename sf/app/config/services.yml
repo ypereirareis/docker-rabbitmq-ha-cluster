@@ -1,0 +1,3 @@
+services:
+    processor.test_consume_quickly:
+        class: AppBundle\Processor\TestConsumeQuicklyProcessor

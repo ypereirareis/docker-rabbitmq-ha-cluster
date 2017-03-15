@@ -1,0 +1,31 @@
+version: '2'
+services:
+
+  composer:
+    image: ypereirareis/composer:1.1.3-alpine
+    working_dir: /src
+    environment:
+      COMPOSER_HOME: /tmp/.composer
+    volumes:
+      - ~/.composer:/tmp/.composer:rw
+      - ./sf:/src:rw
+
+  php:
+    build: ./docker/php
+    restart: always
+    environment:
+      SYMFONY_ENV:
+      CUSTOM_UID: ${UID}
+    volumes:
+      - ./var/logs/app:/var/www/html/var/logs:rw
+      - ./sf:/var/www/html:rw
+
+  rabbitmq:
+    image: rabbitmq:3.6.6-management-alpine
+    environment:
+      RABBITMQ_DEFAULT_USER: rbu
+      RABBITMQ_DEFAULT_PASS: rbp
+    ports:
+      - "127.0.0.1:15672:15672"
+
+
