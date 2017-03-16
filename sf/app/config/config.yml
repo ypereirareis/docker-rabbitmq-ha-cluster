@@ -6,7 +6,6 @@ monolog:
             path: "%kernel.logs_dir%/%kernel.environment%.log"
             level: error
 
-
 swarrot:
     provider: amqp_lib
     default_connection: rabbitmq
@@ -30,5 +29,5 @@ swarrot:
     messages_types:
         my_publisher:
             connection: rabbitmq # use the default connection by default
-            exchange: rabbit_exchange
-            routing_key: rabbit_exchange_key
+            exchange: ex_benchmark_test_1
+            routing_key: ro_benchmark_test_1

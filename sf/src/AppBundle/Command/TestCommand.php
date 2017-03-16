@@ -36,21 +36,18 @@ class TestCommand extends ContainerAwareCommand
 
         $io = new SymfonyStyle($input, $output);
 
-        $message = new Message('"My first message with the awesome swarrot lib :)"');
+//        $propertyKeys = [
+//            'content_type', 'delivery_mode', 'content_encoding', 'type', 'timestamp', 'priority', 'expiration',
+//            'app_id', 'message_id', 'reply_to', 'correlation_id', 'user_id', 'cluster_id', 'channel', 'consumer_tag',
+//            'delivery_tag', 'redelivered', 'exchange', 'routing_key',
+//        ];
+
+        $message = new Message('"My first message with the awesome swarrot lib :)"', ['delivery_mode' => 2]);
         $messagePublisher = $this->getContainer()->get('swarrot.publisher');
 
         while(true) {
             $messagePublisher->publish('my_publisher', $message);
-            usleep(10000);
+            usleep(5000);
         }
-
-        $io->title('TEST OK');
-        $io->error('TEST OK');
-        $io->caution('TEST OK');
-        $io->block('TEST OK');
-        $io->success('TEST OK');
-        $pb = $io->createProgressBar(100);
-        $pb->finish();
-
     }
 }

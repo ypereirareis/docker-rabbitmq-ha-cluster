@@ -1,0 +1,17 @@
+# default_vhost.yml
+'/':
+    parameters:
+        with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+        with_unroutable: false # If true, all exchange will be declared with an unroutable config
+
+    exchanges:
+        ex_benchmark_test_1:
+            type: direct
+            durable: true
+
+    queues:
+        q_benchmark_test_1:
+            durable: true
+            bindings:
+                - exchange: ex_benchmark_test_1
+                  routing_key: ro_benchmark_test_1

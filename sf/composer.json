@@ -4,7 +4,8 @@
         "symfony/console": "^3.2",
         "symfony/monolog-bundle": "^3.0",
         "swarrot/swarrot-bundle": "1.4.1",
-        "php-amqplib/php-amqplib": "^2.6"
+        "php-amqplib/php-amqplib": "^2.6",
+        "odolbeau/rabbit-mq-admin-toolkit": "^3.2"
     },
     "autoload": {
         "psr-4": {

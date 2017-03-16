@@ -53,6 +53,10 @@ console:
 	@echo "== Console command =="
 	@$(compose) run --rm php bin/console $(COMMAND_ARGS)
 
+create-rabbit:
+	@echo "== Rabbit init =="
+	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq -u rbu -p rbp
+
 
 # --------------------------------------------------------
 # COMPOSER
