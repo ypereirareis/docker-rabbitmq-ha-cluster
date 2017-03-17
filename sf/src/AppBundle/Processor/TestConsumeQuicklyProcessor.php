@@ -9,5 +9,6 @@ class TestConsumeQuicklyProcessor implements ProcessorInterface
     public function process(Message $message, array $options)
     {
         //echo $message->getBody()."\n";
+        throw new \Exception('NO ACK');
     }
 }

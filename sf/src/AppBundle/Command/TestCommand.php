@@ -45,9 +45,14 @@ class TestCommand extends ContainerAwareCommand
         $message = new Message('"My first message with the awesome swarrot lib :)"', ['delivery_mode' => 2]);
         $messagePublisher = $this->getContainer()->get('swarrot.publisher');
 
+        $i = 0;
         while(true) {
             $messagePublisher->publish('my_publisher', $message);
             usleep(5000);
+            ++$i;
+            if ($i === 100) {
+                break;
+            }
         }
     }
 }

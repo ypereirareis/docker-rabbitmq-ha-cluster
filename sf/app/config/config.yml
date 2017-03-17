@@ -26,6 +26,11 @@ swarrot:
             middleware_stack:
                 - configurator: swarrot.processor.exception_catcher
                 - configurator: swarrot.processor.ack
+                - configurator: swarrot.processor.retry
+                  extras:
+                    retry_exchange: 'retry'
+                    retry_attempts: 3
+                    retry_routing_key_pattern: 'q_benchmark_test_1_retry_%%attempt%%'
     messages_types:
         my_publisher:
             connection: rabbitmq # use the default connection by default

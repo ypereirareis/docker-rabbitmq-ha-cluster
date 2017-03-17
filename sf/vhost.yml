@@ -12,6 +12,7 @@
     queues:
         q_benchmark_test_1:
             durable: true
+            retries: [5, 25, 100]
             bindings:
                 - exchange: ex_benchmark_test_1
                   routing_key: ro_benchmark_test_1
