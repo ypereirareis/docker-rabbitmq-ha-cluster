@@ -57,6 +57,14 @@ create-rabbit:
 	@echo "== Rabbit init =="
 	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq -u rbu -p rbp
 
+produce:
+	@echo "== Rabbit Produce messages =="
+	@$(compose) run --rm php bin/console rb:test
+
+consume:
+	@echo "== Rabbit Consume messages =="
+	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly benchmark_test_1
+
 
 # --------------------------------------------------------
 # COMPOSER

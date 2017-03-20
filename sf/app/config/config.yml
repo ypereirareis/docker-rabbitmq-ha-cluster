@@ -24,15 +24,26 @@ swarrot:
                 poll_interval: 500000
                 requeue_on_error: false
             middleware_stack:
+                - configurator: swarrot.processor.max_messages
+                  extras:
+                    max_messages: 50
+                - configurator: swarrot.processor.max_execution_time
+                  extras:
+                    max_execution_time: 30
+                - configurator: swarrot.processor.memory_limit
+                  extras:
+                      memory_limit: 50
                 - configurator: swarrot.processor.exception_catcher
                 - configurator: swarrot.processor.ack
                 - configurator: swarrot.processor.retry
                   extras:
                     retry_exchange: 'retry'
                     retry_attempts: 3
-                    retry_routing_key_pattern: 'q_benchmark_test_1_retry_%%attempt%%'
+                    retry_routing_key_pattern: 'benchmark_test_1_retry_%%attempt%%'
+
+
     messages_types:
         my_publisher:
             connection: rabbitmq # use the default connection by default
-            exchange: ex_benchmark_test_1
-            routing_key: ro_benchmark_test_1
+            exchange: benchmark_test_1
+            routing_key: benchmark_test_1
