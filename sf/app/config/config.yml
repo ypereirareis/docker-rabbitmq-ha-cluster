@@ -24,9 +24,10 @@ swarrot:
                 poll_interval: 500000
                 requeue_on_error: false
             middleware_stack:
+                - configurator: swarrot.processor.signal_handler
                 - configurator: swarrot.processor.max_messages
                   extras:
-                    max_messages: 50
+                    max_messages: 10
                 - configurator: swarrot.processor.max_execution_time
                   extras:
                     max_execution_time: 30

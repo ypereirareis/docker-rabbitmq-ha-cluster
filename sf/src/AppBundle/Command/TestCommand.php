@@ -50,7 +50,7 @@ class TestCommand extends ContainerAwareCommand
             $messagePublisher->publish('my_publisher', $message);
             usleep(5000);
             ++$i;
-            if ($i === 100) {
+            if ($i === 10) {
                 break;
             }
         }
