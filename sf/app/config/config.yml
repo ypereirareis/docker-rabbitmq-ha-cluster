@@ -7,7 +7,7 @@ monolog:
             level: error
 
 swarrot:
-    provider: amqp_lib
+    provider: pecl #amqp_lib
     default_connection: rabbitmq
     default_command: swarrot.command.base
     connections:
