@@ -14,7 +14,7 @@ build:
 	@echo "== Build App =="
 	@$(compose) build
 
-install: remove build composer-install start create-rabbit
+install: remove build composer-install start
 
 # --------------------------------------------------------
 # Print containers information
