@@ -14,6 +14,8 @@ build:
 	@echo "== Build App =="
 	@$(compose) build
 
+install: remove build composer-install start create-rabbit
+
 # --------------------------------------------------------
 # Print containers information
 # --------------------------------------------------------
@@ -63,7 +65,7 @@ produce:
 
 consume:
 	@echo "== Rabbit Consume messages =="
-	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly benchmark_test_1
+	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly benchmark_test_1 -vvv
 
 
 # --------------------------------------------------------
