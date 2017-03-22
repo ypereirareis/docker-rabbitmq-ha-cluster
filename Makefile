@@ -83,3 +83,6 @@ composer-update:
 composer-require:
 	@$(compose) run --rm composer bash -c '\
     composer require --ignore-platform-reqs --no-interaction --prefer-dist $(COMMAND_ARGS)'
+
+
+# rabbitmqctl set_policy ha-test "^bench" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'

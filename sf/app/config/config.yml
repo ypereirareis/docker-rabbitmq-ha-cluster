@@ -17,6 +17,18 @@ swarrot:
             login: guest
             password: guest
             vhost: '/'
+        rabbitmq2:
+            host: rabbitmq2
+            port: 5672
+            login: guest
+            password: guest
+            vhost: '/'
+        rabbitmq3:
+            host: rabbitmq3
+            port: 5672
+            login: guest
+            password: guest
+            vhost: '/'
     consumers:
         test_consume_quickly: # name of the consumer
             processor: processor.test_consume_quickly # name of the service
@@ -43,7 +55,17 @@ swarrot:
                     retry_routing_key_pattern: 'benchmark_test_1_retry_%%attempt%%'
 
     messages_types:
-        my_publisher:
-            connection: rabbitmq1 # use the default connection by default
+        my_publisher_1:
+            connection: rabbitmq1
+            exchange: benchmark_test_1
+            routing_key: benchmark_test_1
+
+        my_publisher_2:
+            connection: rabbitmq2
+            exchange: benchmark_test_1
+            routing_key: benchmark_test_1
+
+        my_publisher_3:
+            connection: rabbitmq3
             exchange: benchmark_test_1
             routing_key: benchmark_test_1

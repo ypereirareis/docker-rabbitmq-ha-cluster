@@ -46,8 +46,17 @@ class TestCommand extends ContainerAwareCommand
         $messagePublisher = $this->getContainer()->get('swarrot.publisher');
 
         $i = 0;
+        $publisherIdx = 1;
         while(true) {
-            $messagePublisher->publish('my_publisher', $message);
+            try {
+                $publisherString = 'my_publisher_'.$publisherIdx;
+                $messagePublisher->publish($publisherString, $message);
+                $io->writeln("Writing with publisher ". $publisherString);
+            } catch (\AMQPConnectionException $ex) {
+                $publisherIdx = 2;
+                continue;
+            }
+
             usleep(5000);
             ++$i;
             if ($i === 10) {

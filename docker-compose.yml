@@ -16,7 +16,7 @@ services:
     environment:
       SYMFONY_ENV:
       CUSTOM_UID: ${UID}
-      WAIT_FOR_HOSTS: rabbitmq1:5672 rabbitmq2:5672
+      WAIT_FOR_HOSTS: rabbitmq3:5672
     volumes:
       - ./var/logs/app:/var/www/html/var/logs:rw
       - ./sf:/var/www/html:rw
