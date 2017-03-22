@@ -16,17 +16,41 @@ services:
     environment:
       SYMFONY_ENV:
       CUSTOM_UID: ${UID}
-      WAIT_FOR_HOSTS: rabbitmq:5672
+      WAIT_FOR_HOSTS: rabbitmq1:5672 rabbitmq2:5672
     volumes:
       - ./var/logs/app:/var/www/html/var/logs:rw
       - ./sf:/var/www/html:rw
 
-  rabbitmq:
-    image: rabbitmq:3.6.6-management-alpine
+  rabbitmq1:
+    image: harbur/rabbitmq-cluster
+    hostname: rabbitmq1
     environment:
       RABBITMQ_DEFAULT_USER: rbu
       RABBITMQ_DEFAULT_PASS: rbp
+      ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
     ports:
-      - "127.0.0.1:15672:15672"
+      - "127.0.0.1:1234:15672"
+
+  rabbitmq2:
+    image: harbur/rabbitmq-cluster
+    hostname: rabbitmq2
+    environment:
+      RABBITMQ_DEFAULT_USER: rbu
+      RABBITMQ_DEFAULT_PASS: rbp
+      ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      CLUSTER_WITH: rabbitmq1
+    ports:
+      - "127.0.0.1:1235:15672"
+
+  rabbitmq3:
+    image: harbur/rabbitmq-cluster
+    hostname: rabbitmq3
+    environment:
+      RABBITMQ_DEFAULT_USER: rbu
+      RABBITMQ_DEFAULT_PASS: rbp
+      ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      CLUSTER_WITH: rabbitmq1
+    ports:
+      - "127.0.0.1:1236:15672"
 
 

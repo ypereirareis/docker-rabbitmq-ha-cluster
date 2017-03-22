@@ -11,11 +11,11 @@ swarrot:
     default_connection: rabbitmq
     default_command: swarrot.command.base
     connections:
-        rabbitmq:
-            host: rabbitmq
-            port: 5672 # 15672
-            login: rbu
-            password: rbp
+        rabbitmq1:
+            host: rabbitmq1
+            port: 5672
+            login: guest
+            password: guest
             vhost: '/'
     consumers:
         test_consume_quickly: # name of the consumer
@@ -42,9 +42,8 @@ swarrot:
                     retry_attempts: 3
                     retry_routing_key_pattern: 'benchmark_test_1_retry_%%attempt%%'
 
-
     messages_types:
         my_publisher:
-            connection: rabbitmq # use the default connection by default
+            connection: rabbitmq1 # use the default connection by default
             exchange: benchmark_test_1
             routing_key: benchmark_test_1

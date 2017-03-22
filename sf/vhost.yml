@@ -12,7 +12,7 @@
     queues:
         benchmark_test_1:
             durable: true
-            retries: [5, 25, 100]
+            retries: [5, 10, 30]
             bindings:
                 - exchange: benchmark_test_1
                   routing_key: benchmark_test_1

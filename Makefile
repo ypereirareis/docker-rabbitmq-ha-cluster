@@ -8,7 +8,7 @@ include common.mk
 
 start:
 	@echo "== Start App =="
-	@$(compose) up -d rabbitmq
+	@$(compose) up -d rabbitmq1 rabbitmq2 rabbitmq3
 
 build:
 	@echo "== Build App =="
@@ -57,7 +57,7 @@ console:
 
 create-rabbit:
 	@echo "== Rabbit init =="
-	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq -u rbu -p rbp
+	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq1 -u guest -p guest
 
 produce:
 	@echo "== Rabbit Produce messages =="
