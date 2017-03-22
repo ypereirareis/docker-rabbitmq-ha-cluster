@@ -67,6 +67,9 @@ consume:
 	@echo "== Rabbit Consume messages =="
 	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly benchmark_test_1 -vvv
 
+cluster:
+	@echo "== Rabbit Clustering =="
+	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-test "^bench" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'
 
 # --------------------------------------------------------
 # COMPOSER
