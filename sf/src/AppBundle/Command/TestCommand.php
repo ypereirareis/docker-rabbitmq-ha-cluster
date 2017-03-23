@@ -51,15 +51,15 @@ class TestCommand extends ContainerAwareCommand
             try {
                 $publisherString = 'my_publisher_'.$publisherIdx;
                 $messagePublisher->publish($publisherString, $message);
-                $io->writeln("Writing with publisher ". $publisherString);
+//                $io->writeln("Writing with publisher ". $publisherString);
             } catch (\AMQPConnectionException $ex) {
                 $publisherIdx = ($publisherIdx % 3) + 1;
                 continue;
             }
 
-            usleep(5000);
+            usleep(100);
             ++$i;
-            if ($i === 10) {
+            if ($i === 10000) {
                 break;
             }
         }

@@ -54,9 +54,9 @@ class OldSoundCommand extends ContainerAwareCommand
                 continue;
             }
 
-            usleep(5000);
+            usleep(10000);
             ++$i;
-            if ($i === 10) {
+            if ($i === 1000) {
                 break;
             }
         }

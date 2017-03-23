@@ -39,7 +39,7 @@ swarrot:
                 - configurator: swarrot.processor.signal_handler
                 - configurator: swarrot.processor.max_messages
                   extras:
-                    max_messages: 10
+                    max_messages: 1000
                 - configurator: swarrot.processor.max_execution_time
                   extras:
                     max_execution_time: 30
