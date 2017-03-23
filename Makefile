@@ -59,17 +59,25 @@ create-rabbit:
 	@echo "== Rabbit init =="
 	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq1 -u guest -p guest
 
-produce:
-	@echo "== Rabbit Produce messages =="
+produce-sw:
+	@echo "== SWARROT Rabbit Produce messages =="
 	@$(compose) run --rm php bin/console rb:test
 
-consume:
-	@echo "== Rabbit Consume messages =="
-	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly benchmark_test_1 -vvv
+consume-sw:
+	@echo "== SWARROT Rabbit Consume messages =="
+	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq1 -vvv
 
-cluster:
-	@echo "== Rabbit Clustering =="
+cluster-sw:
+	@echo "== SWARROT Rabbit Clustering =="
 	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-test "^bench" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'
+
+produce-os:
+	@echo "== OLD Rabbit Produce messages =="
+	@$(compose) run --rm php bin/console rb:oldsound
+
+consume-os:
+	@echo "== OLD Rabbit Consume messages =="
+	@$(compose) run --rm php bin/console rabbitmq:consumer oldsound
 
 # --------------------------------------------------------
 # COMPOSER

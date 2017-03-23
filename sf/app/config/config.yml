@@ -52,20 +52,46 @@ swarrot:
                   extras:
                     retry_exchange: 'retry'
                     retry_attempts: 3
-                    retry_routing_key_pattern: 'benchmark_test_1_retry_%%attempt%%'
+                    retry_routing_key_pattern: 'swarrot_retry_%%attempt%%'
 
     messages_types:
         my_publisher_1:
             connection: rabbitmq1
-            exchange: benchmark_test_1
-            routing_key: benchmark_test_1
+            exchange: swarrot
+            routing_key: swarrot
 
-        my_publisher_2:
-            connection: rabbitmq2
-            exchange: benchmark_test_1
-            routing_key: benchmark_test_1
 
-        my_publisher_3:
-            connection: rabbitmq3
-            exchange: benchmark_test_1
-            routing_key: benchmark_test_1
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:     rabbitmq1
+            port:     5672
+            user:     'guest'
+            password: 'guest'
+            vhost:    '/'
+            lazy:     true
+            connection_timeout: 3
+            read_write_timeout: 3
+            keepalive: false
+            heartbeat: 0
+
+            use_socket: false # default false
+#        another:
+#            # A different (unused) connection defined by an URL. One can omit all parts,
+#            # except the scheme (amqp:). If both segment in the URL and a key value (see above)
+#            # are given the value from the URL takes precedence.
+#            # See https://www.rabbitmq.com/uri-spec.html on how to encode values.
+#            url: 'amqp://guest:password@localhost:5672/vhost?lazy=1&connection_timeout=6'
+    producers:
+        oldsound:
+            connection:       default
+            exchange_options: {name: 'oldsound', type: direct}
+#            queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'all']}, routing_keys: ['oldsound']}
+            service_alias:    oldsound_producer
+
+    consumers:
+        oldsound:
+            connection:       default
+            exchange_options: {name: 'oldsound', type: direct}
+            queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'all']}}
+            callback:         oldsound_consumer

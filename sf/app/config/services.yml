@@ -1,3 +1,6 @@
 services:
     processor.test_consume_quickly:
         class: AppBundle\Processor\TestConsumeQuicklyProcessor
+
+    oldsound_consumer:
+        class: AppBundle\Processor\OldSoundProcessor

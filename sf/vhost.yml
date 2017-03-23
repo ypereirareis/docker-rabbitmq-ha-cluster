@@ -5,14 +5,13 @@
         with_unroutable: false # If true, all exchange will be declared with an unroutable config
 
     exchanges:
-        benchmark_test_1:
+        swarrot:
             type: direct
             durable: true
-
     queues:
-        benchmark_test_1:
+        swarrot:
             durable: true
             retries: [5, 10, 30]
             bindings:
-                - exchange: benchmark_test_1
-                  routing_key: benchmark_test_1
+                - exchange: swarrot
+                  routing_key: swarrot
