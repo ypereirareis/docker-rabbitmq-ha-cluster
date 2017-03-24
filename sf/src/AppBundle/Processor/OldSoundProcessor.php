@@ -10,7 +10,6 @@ class OldSoundProcessor implements ConsumerInterface
     public function execute(AMQPMessage $msg)
     {
         // TODO: Implement execute() method.
-        return false;
     }
 
 }

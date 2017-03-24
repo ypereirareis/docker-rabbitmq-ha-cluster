@@ -48,7 +48,7 @@ class OldSoundCommand extends ContainerAwareCommand
             try {
                 $publisherString = 'my_publisher_'.$publisherIdx;
                 $messagePublisher->publish(serialize("My first message with the awesome swarrot lib :)"));
-                $io->writeln("Writing with publisher ". $publisherString);
+//                $io->writeln("Writing with publisher ". $publisherString);
             } catch (\AMQPConnectionException $ex) {
                 $publisherIdx = ($publisherIdx % 3) + 1;
                 continue;

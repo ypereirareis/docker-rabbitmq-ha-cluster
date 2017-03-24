@@ -57,9 +57,9 @@ class TestCommand extends ContainerAwareCommand
                 continue;
             }
 
-            usleep(100);
+            usleep(10000);
             ++$i;
-            if ($i === 10000) {
+            if ($i === 1000) {
                 break;
             }
         }
