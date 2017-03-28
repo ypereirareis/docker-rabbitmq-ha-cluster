@@ -18,9 +18,9 @@ do
       { bin/console rabbitmq:consumer oldsound -m 100; } &
       { bin/console rabbitmq:consumer oldsound -m 100; } &
     else
-      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq1; } &
-      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq1; } &
-      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq1; } &
+      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq; } &
+      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq; } &
+      { bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq; } &
     fi
 
     usleep 100000

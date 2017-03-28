@@ -8,7 +8,7 @@ include common.mk
 
 start:
 	@echo "== Start App =="
-	@$(compose) up -d rabbitmq1 rabbitmq2 rabbitmq3
+	@$(compose) up -d haproxy
 
 build:
 	@echo "== Build App =="
@@ -69,7 +69,7 @@ consume-sw:
 
 cluster-sw:
 	@echo "== SWARROT Rabbit Clustering =="
-	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-test "^bench" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'
+	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-test "^swarrot" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'
 
 produce-os:
 	@echo "== OLD Rabbit Produce messages =="

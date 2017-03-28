@@ -27,6 +27,7 @@ services:
       RABBITMQ_DEFAULT_USER: rbu
       RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      TCP_PORTS: "5672"
     ports:
       - "127.0.0.1:1234:15672"
 
@@ -38,6 +39,7 @@ services:
       RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       CLUSTER_WITH: rabbitmq1
+      TCP_PORTS: "5672"
     ports:
       - "127.0.0.1:1235:15672"
 
@@ -49,7 +51,22 @@ services:
       RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       CLUSTER_WITH: rabbitmq1
+      TCP_PORTS: "5672"
     ports:
       - "127.0.0.1:1236:15672"
+
+  haproxy:
+    image: dockercloud/haproxy:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      MODE: tcp
+    links:
+      - rabbitmq1
+      - rabbitmq2
+      - rabbitmq3
+    ports:
+      - '80:80'
+      - '5672:5672'
 
 

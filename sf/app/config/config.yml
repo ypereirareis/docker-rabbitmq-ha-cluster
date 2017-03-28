@@ -11,24 +11,13 @@ swarrot:
     default_connection: rabbitmq
     default_command: swarrot.command.base
     connections:
-        rabbitmq1:
-            host: rabbitmq1
+        rabbitmq:
+            host: haproxy
             port: 5672
             login: guest
             password: guest
             vhost: '/'
-        rabbitmq2:
-            host: rabbitmq2
-            port: 5672
-            login: guest
-            password: guest
-            vhost: '/'
-        rabbitmq3:
-            host: rabbitmq3
-            port: 5672
-            login: guest
-            password: guest
-            vhost: '/'
+
     consumers:
         test_consume_quickly: # name of the consumer
             processor: processor.test_consume_quickly # name of the service
@@ -56,15 +45,14 @@ swarrot:
 
     messages_types:
         my_publisher_1:
-            connection: rabbitmq1
+            connection: rabbitmq
             exchange: swarrot
             routing_key: swarrot
-
 
 old_sound_rabbit_mq:
     connections:
         default:
-            host:     rabbitmq1
+            host:     haproxy
             port:     5672
             user:     'guest'
             password: 'guest'

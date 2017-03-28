@@ -46,20 +46,24 @@ class TestCommand extends ContainerAwareCommand
         $messagePublisher = $this->getContainer()->get('swarrot.publisher');
 
         $i = 0;
-        $publisherIdx = 1;
+        $connectionRetry = 0;
         while(true) {
             try {
-                $publisherString = 'my_publisher_'.$publisherIdx;
+                $publisherString = 'my_publisher_1';
                 $messagePublisher->publish($publisherString, $message);
 //                $io->writeln("Writing with publisher ". $publisherString);
             } catch (\AMQPConnectionException $ex) {
-                $publisherIdx = ($publisherIdx % 3) + 1;
-                continue;
+                if ($connectionRetry++ < 5) {
+                    $io->note('Trying to reconnect => '.$connectionRetry);
+                    sleep(2);
+                    continue;
+                }
+                throw $ex; // Or simply log or send info to sentry
             }
 
             usleep(10000);
             ++$i;
-            if ($i === 1000) {
+            if ($i === 100) {
                 break;
             }
         }
