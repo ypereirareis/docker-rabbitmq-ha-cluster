@@ -61,6 +61,8 @@ Access the Management Plugin interface for nodes:
 * http://127.0.0.1:1235
 * http://127.0.0.1:1236
 
+![Rabbit cluster](./img/rabbitmq_cluster_start.png)
+
 You can use, test or compare two php/symfony librairies.
 Simply use one of the library or both in the mean time.
 
