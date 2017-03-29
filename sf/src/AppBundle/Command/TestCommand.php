@@ -36,34 +36,39 @@ class TestCommand extends ContainerAwareCommand
 
         $io = new SymfonyStyle($input, $output);
 
-//        $propertyKeys = [
-//            'content_type', 'delivery_mode', 'content_encoding', 'type', 'timestamp', 'priority', 'expiration',
-//            'app_id', 'message_id', 'reply_to', 'correlation_id', 'user_id', 'cluster_id', 'channel', 'consumer_tag',
-//            'delivery_tag', 'redelivered', 'exchange', 'routing_key',
-//        ];
-
         $message = new Message('"My first message with the awesome swarrot lib :)"', ['delivery_mode' => 2]);
         $messagePublisher = $this->getContainer()->get('swarrot.publisher');
 
         $i = 0;
+        $bulk = 100;
         $connectionRetry = 0;
+        $exceptionRetry = 0;
         while(true) {
             try {
                 $publisherString = 'my_publisher_1';
                 $messagePublisher->publish($publisherString, $message);
-//                $io->writeln("Writing with publisher ". $publisherString);
             } catch (\AMQPConnectionException $ex) {
                 if ($connectionRetry++ < 5) {
                     $io->note('Trying to reconnect => '.$connectionRetry);
                     sleep(2);
                     continue;
                 }
-                throw $ex; // Or simply log or send info to sentry
+                $io->warning("Exit with error: ".$ex->getMessage());
+                break;
+            } catch (\Exception $exception) {
+                if ($exceptionRetry++ < 5) {
+                    $io->note('Skipping exception => '.$exceptionRetry);
+                    sleep(2);
+                    continue;
+                }
+                $io->warning("Exit with error: ".$exception->getMessage());
+                break;
             }
 
             usleep(10000);
             ++$i;
-            if ($i === 100) {
+            if ($i === $bulk) {
+                $io->writeln('Process ' .getmypid() . ': '.$bulk.' more messages added');
                 break;
             }
         }

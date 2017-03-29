@@ -43,20 +43,34 @@ class OldSoundCommand extends ContainerAwareCommand
         $messagePublisher->setDeliveryMode(AMQPMessage::DELIVERY_MODE_PERSISTENT);
 
         $i = 0;
-        $publisherIdx = 1;
+        $bulk = 100;
+        $connectionRetry = 0;
+        $exceptionRetry = 0;
         while(true) {
             try {
-                $publisherString = 'my_publisher_'.$publisherIdx;
                 $messagePublisher->publish(serialize("My first message with the awesome swarrot lib :)"));
-//                $io->writeln("Writing with publisher ". $publisherString);
             } catch (\AMQPConnectionException $ex) {
-                $publisherIdx = ($publisherIdx % 3) + 1;
-                continue;
+                if ($connectionRetry++ < 5) {
+                    $io->note('Trying to reconnect => '.$connectionRetry);
+                    sleep(2);
+                    continue;
+                }
+                $io->warning("Exit with error: ".$ex->getMessage());
+                break;
+            } catch (\Exception $exception) {
+                if ($exceptionRetry++ < 5) {
+                    $io->note('Skipping exception => '.$exceptionRetry);
+                    sleep(2);
+                    continue;
+                }
+                $io->warning("Exit with error: ".$exception->getMessage());
+                break;
             }
 
             usleep(10000);
             ++$i;
-            if ($i === 1000) {
+            if ($i === $bulk) {
+                $io->writeln('Process ' .getmypid() . ': '.$bulk.' more messages added');
                 break;
             }
         }

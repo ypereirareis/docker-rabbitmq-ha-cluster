@@ -74,12 +74,11 @@ old_sound_rabbit_mq:
         oldsound:
             connection:       default
             exchange_options: {name: 'oldsound', type: direct}
-#            queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'all']}, routing_keys: ['oldsound']}
             service_alias:    oldsound_producer
 
     consumers:
         oldsound:
             connection:       default
             exchange_options: {name: 'oldsound', type: direct}
-            queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'all']}}
+            queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'ha-oldsound']}}
             callback:         oldsound_consumer

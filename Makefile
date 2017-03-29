@@ -69,7 +69,11 @@ consume-sw:
 
 cluster-sw:
 	@echo "== SWARROT Rabbit Clustering =="
-	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-test "^swarrot" \ '{"ha-mode":"exactly","ha-params":3,"ha-sync-mode":"automatic"}'
+	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-swarrot "^swarrot" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+
+cluster-os:
+	@echo "== SWARROT Rabbit Clustering =="
+	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-oldsound "^oldsound" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
 
 produce-os:
 	@echo "== OLD Rabbit Produce messages =="
