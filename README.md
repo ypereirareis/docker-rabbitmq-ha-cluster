@@ -70,6 +70,14 @@ Simply use one of the library or both in the mean time.
 
 #### Set the ha-policy
 
+```
+$ make cluster-sw 
+== SWARROT Rabbit Clustering ==
+Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
+```
+
+![Rabbit cluster](./img/rabbitmq-policy-swarrot.png)
+
 #### Consumers
 
 #### Producers
@@ -77,6 +85,14 @@ Simply use one of the library or both in the mean time.
 ### php-amqplib/RabbitMqBundle
 
 #### Set the ha-policy
+
+```
+$ make cluster-os
+== SWARROT Rabbit Clustering ==
+Setting policy "ha-oldsound" for pattern "^oldsound" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
+```
+
+![Rabbit cluster](./img/rabbitmq-policy-oldsound.png)
 
 #### Consumers
 
