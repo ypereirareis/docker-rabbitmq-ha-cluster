@@ -33,6 +33,7 @@ With this stack you will be able to experiment:
 * Node failure
 * Network partition
 * Messages persistency
+* Message NO ACK and retries
 
 ## Setup / Start /Stop the cluster
 
@@ -77,6 +78,39 @@ Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"h
 ```
 
 ![Rabbit cluster](./img/rabbitmq-policy-swarrot.png)
+
+#### Excnahges/Queues
+
+With swarrot, exahcnge and queues are not created by the library or the bundle.
+YOu need to create everything manually or with command line.
+
+```
+$ make init-sw 
+== Rabbit init ==
+IMPORTANT : Waiting for nothing because no  env var defined !!!
+With DL: false
+With Unroutable: false
+Create exchange swarrot
+Create exchange dl
+Create queue swarrot
+Create queue swarrot_dl
+Create binding between exchange dl and queue swarrot_dl (with routing_key: swarrot)
+Create exchange retry
+Create queue swarrot_retry_1
+Create binding between exchange retry and queue swarrot_retry_1 (with routing_key: swarrot_retry_1)
+Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
+Create exchange retry
+Create queue swarrot_retry_2
+Create binding between exchange retry and queue swarrot_retry_2 (with routing_key: swarrot_retry_2)
+Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
+Create exchange retry
+Create queue swarrot_retry_3
+Create binding between exchange retry and queue swarrot_retry_3 (with routing_key: swarrot_retry_3)
+Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
+Create binding between exchange swarrot and queue swarrot (with routing_key: swarrot)
+```
+
+![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
 
 #### Consumers
 
