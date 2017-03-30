@@ -19,41 +19,49 @@ services:
     volumes:
       - ./var/logs/app:/var/www/html/var/logs:rw
       - ./sf:/var/www/html:rw
+    networks:
+      - default
 
   rabbitmq1:
     image: harbur/rabbitmq-cluster
     hostname: rabbitmq1
     environment:
-      RABBITMQ_DEFAULT_USER: rbu
-      RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       TCP_PORTS: "5672"
+      VIRTUAL_HOST: rabbit
     ports:
       - "127.0.0.1:1234:15672"
+    networks:
+      - rabbitmq_1_2
+      - rabbitmq_3_1
 
   rabbitmq2:
     image: harbur/rabbitmq-cluster
     hostname: rabbitmq2
     environment:
-      RABBITMQ_DEFAULT_USER: rbu
-      RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       CLUSTER_WITH: rabbitmq1
       TCP_PORTS: "5672"
+      VIRTUAL_HOST: rabbit
     ports:
       - "127.0.0.1:1235:15672"
+    networks:
+      - rabbitmq_1_2
+      - rabbitmq_2_3
 
   rabbitmq3:
     image: harbur/rabbitmq-cluster
     hostname: rabbitmq3
     environment:
-      RABBITMQ_DEFAULT_USER: rbu
-      RABBITMQ_DEFAULT_PASS: rbp
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       CLUSTER_WITH: rabbitmq1
       TCP_PORTS: "5672"
+      VIRTUAL_HOST: rabbit
     ports:
       - "127.0.0.1:1236:15672"
+    networks:
+      - rabbitmq_3_1
+      - rabbitmq_2_3
 
   haproxy:
     image: dockercloud/haproxy:latest
@@ -61,6 +69,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       MODE: tcp
+    expose:
+      - 5672
     links:
       - rabbitmq1
       - rabbitmq2
@@ -68,5 +78,19 @@ services:
     ports:
       - '80:80'
       - '5672:5672'
+    networks:
+      - default
+      - rabbitmq_1_2
+      - rabbitmq_2_3
+      - rabbitmq_3_1
 
-
+networks:
+  rabbitmq_1_2:
+    external:
+      name: rabbitmq_1_2
+  rabbitmq_2_3:
+    external:
+      name: rabbitmq_2_3
+  rabbitmq_3_1:
+    external:
+      name: rabbitmq_3_1

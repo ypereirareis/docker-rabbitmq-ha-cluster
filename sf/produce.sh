@@ -6,9 +6,9 @@ TYPE=${TYPE:-swarrot}
 
 echo "---------------------------------------------------"
 echo "> Type: $TYPE"
-echo "> Info: 10 producuers running in parallel"
+echo "> Info: 10 producers running in parallel"
 echo "---------------------------------------------------"
-echo "10 producuers running..."
+echo "10 producers running..."
 
 
 while true
@@ -24,5 +24,5 @@ do
     usleep 100000
   done
   wait
-  echo "10 new producuers running..."
+  echo "10 new producers running..."
 done

@@ -43,7 +43,11 @@ make start
 make stop
 ```
 
-Once the setup process is over, check everything is ok:
+Once the setup process is over, check everything is ok (sometimes the startup process fails):
+
+```
+make stop && make start # To restart the cluster properly
+```
 
 ```shell
 $ make state
@@ -177,7 +181,49 @@ Setting policy "ha-oldsound" for pattern "^oldsound" to " {\"ha-mode\":\"all\",\
 
 #### Consumers
 
+```shell
+$ make bash
+== Connect into PHP container ==
+IMPORTANT : Waiting for nothing because no  env var defined !!!
+bash-4.3# ./consume.sh oldsound
+---------------------------------------------------
+> Type: oldsound
+> Info: 30 consumers running in parallel reading 100 messages each before finishing
+---------------------------------------------------
+30 consumers running...
+```
+
+![Rabbit cluster](./img/rabbitmq-oldsound-consumers.png)
+
 #### Producers
+
+```shell
+$ make bash
+== Connect into PHP container ==
+IMPORTANT : Waiting for nothing because no  env var defined !!!
+bash-4.3# ./produce.sh oldsound
+---------------------------------------------------
+> Type: oldsound
+> Info: 10 producers running in parallel
+---------------------------------------------------
+10 producers running...
+Process 10: 100 more messages added
+Process 20: 100 more messages added
+Process 29: 100 more messages added
+Process 38: 100 more messages added
+Process 47: 100 more messages added
+Process 56: 100 more messages added
+Process 65: 100 more messages added
+Process 74: 100 more messages added
+Process 86: 100 more messages added
+Process 83: 100 more messages added
+10 new producers running...
+Process 101: 100 more messages added
+```
+
+Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
+
+![Rabbit cluster](./img/rabbitmq-oldsound-run.png)
 
 ## Tests/Benckmark
 

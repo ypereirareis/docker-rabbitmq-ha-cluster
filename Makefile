@@ -14,7 +14,15 @@ build:
 	@echo "== Build App =="
 	@$(compose) build
 
-install: remove build composer-install start
+
+networking:
+	@echo "== Create networks =="
+	@docker network create rabbitmq_1_2 || true
+	@docker network create rabbitmq_2_3 || true
+	@docker network create rabbitmq_3_1 || true
+	@docker network create rabbitmq_haproxy || true
+
+install: networking remove build composer-install start
 
 # --------------------------------------------------------
 # Print containers information
@@ -82,6 +90,24 @@ produce-os:
 consume-os:
 	@echo "== OLD Rabbit Consume messages =="
 	@$(compose) run --rm php bin/console rabbitmq:consumer oldsound
+
+stop-node-1:
+	@echo "== Stop rabbitmq node 1 from cluster =="
+	@docker stop dockerrabbitmqhacluster_rabbitmq1_1
+
+resume-node-1:
+	@echo "== Stop rabbitmq node 1 from cluster =="
+	@docker start dockerrabbitmqhacluster_rabbitmq1_1
+
+exclude-node-1:
+	@echo "== Exclude rabbitmq node 1 from cluster =="
+	@docker network disconnect rabbitmq_1_2 dockerrabbitmqhacluster_rabbitmq1_1
+	@docker network disconnect rabbitmq_3_1 dockerrabbitmqhacluster_rabbitmq1_1
+	
+restore-node-1:
+	@echo "== Exclude rabbitmq node 1 from cluster =="
+	@docker network connect rabbitmq_1_2 dockerrabbitmqhacluster_rabbitmq1_1
+	@docker network connect rabbitmq_3_1 dockerrabbitmqhacluster_rabbitmq1_1
 
 # --------------------------------------------------------
 # COMPOSER
