@@ -112,9 +112,56 @@ Create binding between exchange swarrot and queue swarrot (with routing_key: swa
 
 ![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
 
+** HA Policy**
+
+![Rabbit cluster](./img/rabbitmq-ha-policy-2.png)
+
 #### Consumers
 
+```shell
+$ make bash
+== Connect into PHP container ==
+IMPORTANT : Waiting for nothing because no  env var defined !!!
+bash-4.3# ./consume.sh 
+---------------------------------------------------
+> Type: swarrot
+> Info: 30 consumers running in parallel reading 100 messages each before finishing
+---------------------------------------------------
+30 consumers running...
+```
+
 #### Producers
+
+```shell
+$ make bash
+== Connect into PHP container ==
+IMPORTANT : Waiting for nothing because no  env var defined !!!
+bash-4.3# ./produce.sh 
+---------------------------------------------------
+> Type: swarrot
+> Info: 10 producuers running in parallel
+---------------------------------------------------
+10 producuers running...
+Process 9: 100 more messages added
+Process 19: 100 more messages added
+Process 28: 100 more messages added
+Process 37: 100 more messages added
+Process 46: 100 more messages added
+Process 55: 100 more messages added
+Process 64: 100 more messages added
+Process 73: 100 more messages added
+Process 82: 100 more messages added
+Process 91: 100 more messages added
+10 new producuers running...
+Process 100: 100 more messages added
+Process 109: 100 more messages added
+Process 118: 100 more messages added
+Process 127: 100 more messages added
+```
+
+Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
+
+![Rabbit cluster](./img/rabbitmq-swarrot-run.png)
 
 ### php-amqplib/RabbitMqBundle
 
