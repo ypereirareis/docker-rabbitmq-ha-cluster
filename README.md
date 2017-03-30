@@ -37,7 +37,7 @@ With this stack you will be able to experiment:
 
 ## Setup / Start /Stop the cluster
 
-```
+```shell
 make install
 make start
 make stop
@@ -45,7 +45,7 @@ make stop
 
 Once the setup process is over, check everything is ok:
 
-```
+```shell
 $ make state
 == Print state of containers ==
             Name                           Command               State                                                          Ports                                                         
@@ -71,7 +71,7 @@ Simply use one of the library or both in the mean time.
 
 #### Set the ha-policy
 
-```
+```shell
 $ make cluster-sw 
 == SWARROT Rabbit Clustering ==
 Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
@@ -84,7 +84,7 @@ Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"h
 With Swarrot, exchanges and queues are not created by the library or the bundle.
 YOu need to create everything manually or with command line.
 
-```
+```shell
 $ make init-sw 
 == Rabbit init ==
 IMPORTANT : Waiting for nothing because no  env var defined !!!
@@ -120,7 +120,7 @@ Create binding between exchange swarrot and queue swarrot (with routing_key: swa
 
 #### Set the ha-policy
 
-```
+```shell
 $ make cluster-os
 == SWARROT Rabbit Clustering ==
 Setting policy "ha-oldsound" for pattern "^oldsound" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
