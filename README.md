@@ -11,9 +11,7 @@ A docker stack to create, test and benchmark a rabbitmq cluster in high availabi
 * Parallel producers
 * Parallel consumers
 
-<div style="text-align:center">
 ![Rabbit cluster](./img/rabbitmq.png)
-</div>
 
 ## The stack
 
