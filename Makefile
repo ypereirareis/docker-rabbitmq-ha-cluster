@@ -1,6 +1,21 @@
 .PHONY: mysql log stop start remove install
 compose=docker-compose
-include common.mk
+
+
+# ================================================================================
+# If the first argument is one of the supported commands...
+# ================================================================================
+SUPPORTED_COMMANDS := console composer-install composer-require composer-update composer-create
+SUPPORTS_MAKE_ARGS := $(findstring $(firstword $(MAKECMDGOALS)), $(SUPPORTED_COMMANDS))
+ifneq "$(SUPPORTS_MAKE_ARGS)" ""
+  # use the rest as arguments for the command
+  COMMAND_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  COMMAND_ARGS := $(subst :,\:,$(COMMAND_ARGS))
+  COMMAND_ARGS := $(subst -,\-,$(COMMAND_ARGS))
+  COMMAND_ARGS := $(subst =,\=,$(COMMAND_ARGS))
+  # ...and turn them into do-nothing targets
+  $(eval $(COMMAND_ARGS):;@:)
+endif
 
 ####################################################################################################################
 # APP COMMANDS
@@ -14,13 +29,11 @@ build:
 	@echo "== Build App =="
 	@$(compose) build
 
-
 networking:
 	@echo "== Create networks =="
 	@docker network create rabbitmq_1_2 || true
 	@docker network create rabbitmq_2_3 || true
 	@docker network create rabbitmq_3_1 || true
-	@docker network create rabbitmq_haproxy || true
 
 install: networking remove build composer-install start
 
