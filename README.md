@@ -81,7 +81,7 @@ Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"h
 
 #### Excnahges/Queues
 
-With swarrot, exahcnge and queues are not created by the library or the bundle.
+With Swarrot, exchanges and queues are not created by the library or the bundle.
 YOu need to create everything manually or with command line.
 
 ```
