@@ -112,7 +112,7 @@ Create binding between exchange swarrot and queue swarrot (with routing_key: swa
 
 ![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
 
-** HA Policy**
+**HA Policy**
 
 ![Rabbit cluster](./img/rabbitmq-ha-policy-2.png)
 
