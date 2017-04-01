@@ -12,7 +12,6 @@ services:
 
   php:
     build: ./docker/php
-    restart: always
     environment:
       SYMFONY_ENV:
       CUSTOM_UID: ${UID}
@@ -22,46 +21,43 @@ services:
     networks:
       - default
 
-  rabbitmq1:
+  rabbit1:
     image: harbur/rabbitmq-cluster
-    hostname: rabbitmq1
+    hostname: rabbit1
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
-      TCP_PORTS: "5672"
-      VIRTUAL_HOST: rabbit
+      TCP_PORTS: "5672,15672"
     ports:
       - "127.0.0.1:1234:15672"
     networks:
-      - rabbitmq_1_2
-      - rabbitmq_3_1
+      - rabbit_1_2
+      - rabbit_3_1
 
-  rabbitmq2:
+  rabbit2:
     image: harbur/rabbitmq-cluster
-    hostname: rabbitmq2
+    hostname: rabbit2
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
-      CLUSTER_WITH: rabbitmq1
+      CLUSTER_WITH: rabbit1
       TCP_PORTS: "5672"
-      VIRTUAL_HOST: rabbit
     ports:
       - "127.0.0.1:1235:15672"
     networks:
-      - rabbitmq_1_2
-      - rabbitmq_2_3
+      - rabbit_1_2
+      - rabbit_2_3
 
-  rabbitmq3:
+  rabbit3:
     image: harbur/rabbitmq-cluster
-    hostname: rabbitmq3
+    hostname: rabbit3
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
-      CLUSTER_WITH: rabbitmq1
+      CLUSTER_WITH: rabbit1
       TCP_PORTS: "5672"
-      VIRTUAL_HOST: rabbit
     ports:
       - "127.0.0.1:1236:15672"
     networks:
-      - rabbitmq_3_1
-      - rabbitmq_2_3
+      - rabbit_3_1
+      - rabbit_2_3
 
   haproxy:
     image: dockercloud/haproxy:latest
@@ -72,25 +68,25 @@ services:
     expose:
       - 5672
     links:
-      - rabbitmq1
-      - rabbitmq2
-      - rabbitmq3
+      - rabbit1
+      - rabbit2
+      - rabbit3
     ports:
       - '80:80'
       - '5672:5672'
     networks:
       - default
-      - rabbitmq_1_2
-      - rabbitmq_2_3
-      - rabbitmq_3_1
+      - rabbit_1_2
+      - rabbit_2_3
+      - rabbit_3_1
 
 networks:
-  rabbitmq_1_2:
+  rabbit_1_2:
     external:
-      name: rabbitmq_1_2
-  rabbitmq_2_3:
+      name: rabbit_1_2
+  rabbit_2_3:
     external:
-      name: rabbitmq_2_3
-  rabbitmq_3_1:
+      name: rabbit_2_3
+  rabbit_3_1:
     external:
-      name: rabbitmq_3_1
+      name: rabbit_3_1

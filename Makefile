@@ -1,5 +1,5 @@
 .PHONY: mysql log stop start remove install
-compose=docker-compose
+compose=docker-compose -p rmq
 
 
 # ================================================================================
@@ -31,9 +31,9 @@ build:
 
 networking:
 	@echo "== Create networks =="
-	@docker network create rabbitmq_1_2 || true
-	@docker network create rabbitmq_2_3 || true
-	@docker network create rabbitmq_3_1 || true
+	@docker network create rabbit_1_2 || true
+	@docker network create rabbit_2_3 || true
+	@docker network create rabbit_3_1 || true
 
 install: networking remove build composer-install start
 
@@ -78,7 +78,7 @@ console:
 
 init-sw:
 	@echo "== Rabbit init =="
-	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=rabbitmq1 -u guest -p guest
+	@$(compose) run --rm php vendor/bin/rabbit vhost:mapping:create vhost.yml --host=haproxy -u guest -p guest
 
 produce-sw:
 	@echo "== SWARROT Rabbit Produce messages =="
@@ -86,15 +86,15 @@ produce-sw:
 
 consume-sw:
 	@echo "== SWARROT Rabbit Consume messages =="
-	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly swarrot rabbitmq1 -vvv
+	@$(compose) run --rm php bin/console swarrot:consume:test_consume_quickly swarrot rabbit1 -vvv
 
 cluster-sw:
 	@echo "== SWARROT Rabbit Clustering =="
-	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-swarrot "^swarrot" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+	@$(compose) exec rabbit1 rabbitmqctl set_policy ha-swarrot "^swarrot" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
 
 cluster-os:
 	@echo "== SWARROT Rabbit Clustering =="
-	@$(compose) exec rabbitmq1 rabbitmqctl set_policy ha-oldsound "^oldsound" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
+	@$(compose) exec rabbit1 rabbitmqctl set_policy ha-oldsound "^oldsound" \ '{"ha-mode":"all","ha-sync-mode":"automatic"}'
 
 produce-os:
 	@echo "== OLD Rabbit Produce messages =="
@@ -106,21 +106,21 @@ consume-os:
 
 stop-node-1:
 	@echo "== Stop rabbitmq node 1 from cluster =="
-	@docker stop dockerrabbitmqhacluster_rabbitmq1_1
+	@docker stop
 
 resume-node-1:
 	@echo "== Stop rabbitmq node 1 from cluster =="
-	@docker start dockerrabbitmqhacluster_rabbitmq1_1
+	@docker start
 
 exclude-node-1:
 	@echo "== Exclude rabbitmq node 1 from cluster =="
-	@docker network disconnect rabbitmq_1_2 dockerrabbitmqhacluster_rabbitmq1_1
-	@docker network disconnect rabbitmq_3_1 dockerrabbitmqhacluster_rabbitmq1_1
+	@docker network disconnect rabbit_1_2
+	@docker network disconnect rabbit_3_1
 	
 restore-node-1:
-	@echo "== Exclude rabbitmq node 1 from cluster =="
-	@docker network connect rabbitmq_1_2 dockerrabbitmqhacluster_rabbitmq1_1
-	@docker network connect rabbitmq_3_1 dockerrabbitmqhacluster_rabbitmq1_1
+	@echo "== Exclude rabbit node 1 from cluster =="
+	@docker network connect rabbit_1_2
+	@docker network connect rabbit_3_1
 
 # --------------------------------------------------------
 # COMPOSER

@@ -242,3 +242,7 @@ Once consumers and producers are started you should see messages in the Rabbitmq
 #### Restart all nodes
 
 ### Network partition
+
+#### Exclude node 1 from the cluster network
+
+
