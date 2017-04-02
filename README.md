@@ -1,5 +1,6 @@
 # Docker Rabbitmq HA Cluster
 
+## TLDR
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
 
 * HAProxy
@@ -11,21 +12,24 @@ A docker stack to create, test and benchmark a rabbitmq cluster in high availabi
 * Parallel producers
 * Parallel consumers
 
-![Rabbit cluster](./img/rabbitmq.png)
+If you have questions, comments or suggestions please just create issues.
+
 
 ## The stack
+
+![Rabbit cluster](./img/rabbitmq.png)
 
 A lot of great tools (thanks to all awesome authors)
 
 * Make
 * Docker and docker-compose
 * Rabbitmq and Management Plugin (docker)
-* HAProxy (docker)
+* [HAProxy](https://github.com/docker/dockercloud-haproxy)
 * Shell scripts
 * Symfony MicroFramework (producers and consumers in docker containers)
-* swarrot/swarrot-bundle
-* php-amqplib/rabbitmq-bundle
-* odolbeau/rabbit-mq-admin-toolkit
+* [swarrot](https://github.com/swarrot/swarrot) / [swarrot-bundle](https://github.com/swarrot/SwarrotBundle)
+* [php-amqplib/rabbitmq-bundle](https://github.com/php-amqplib/RabbitMqBundle)
+* [odolbeau/rabbit-mq-admin-toolkit](https://github.com/odolbeau/rabbit-mq-admin-toolkit)
 
 ## Tests / Benchmark
 
@@ -54,13 +58,15 @@ make stop && make start # To restart the cluster properly
 ```shell
 $ make state
 == Print state of containers ==
-            Name                           Command               State                                                          Ports                                                         
----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-rabbitmqbenchmark_haproxy_1     /sbin/tini -- dockercloud- ...   Up      1936/tcp, 443/tcp, 0.0.0.0:5672->5672/tcp, 0.0.0.0:80->80/tcp                                                        
-rabbitmqbenchmark_rabbitmq1_1   /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1234->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp 
-rabbitmqbenchmark_rabbitmq2_1   /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1235->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp 
-rabbitmqbenchmark_rabbitmq3_1   /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1236->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp
+    Name                   Command               State                                                          Ports                                                         
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+rmq_haproxy_1   /sbin/tini -- dockercloud- ...   Up      1936/tcp, 443/tcp, 0.0.0.0:5672->5672/tcp, 0.0.0.0:80->80/tcp                                                        
+rmq_rmq1_1      /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1234->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp 
+rmq_rmq2_1      /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1235->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp 
+rmq_rmq3_1      /pre-entrypoint.sh rabbitm ...   Up      127.0.0.1:1236->15672/tcp, 25672/tcp, 4369/tcp, 5672/tcp, 9100/tcp, 9101/tcp, 9102/tcp, 9103/tcp, 9104/tcp, 9105/tcp
 ```
+
+![Rabbit cluster](./img/ctop_start.png)
 
 Access the Management Plugin interface for nodes:
 
@@ -78,20 +84,20 @@ Simply use one of the library or both in the mean time.
 #### Set the ha-policy
 
 ```shell
-$ make cluster-sw 
+$ make cluster-sw
 == SWARROT Rabbit Clustering ==
 Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
 ```
 
 ![Rabbit cluster](./img/rabbitmq-policy-swarrot.png)
 
-#### Excnahges/Queues
+#### Exchanges/Queues
 
 With Swarrot, exchanges and queues are not created by the library or the bundle.
 YOu need to create everything manually or with command line.
 
 ```shell
-$ make init-sw 
+$ make init-sw
 == Rabbit init ==
 IMPORTANT : Waiting for nothing because no  env var defined !!!
 With DL: false
@@ -118,9 +124,6 @@ Create binding between exchange swarrot and queue swarrot (with routing_key: swa
 
 ![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
 
-**HA Policy**
-
-![Rabbit cluster](./img/rabbitmq-ha-policy-2.png)
 
 #### Consumers
 
@@ -145,24 +148,21 @@ IMPORTANT : Waiting for nothing because no  env var defined !!!
 bash-4.3# ./produce.sh 
 ---------------------------------------------------
 > Type: swarrot
-> Info: 10 producuers running in parallel
+> Info: 10 producers running in parallel
 ---------------------------------------------------
-10 producuers running...
-Process 9: 100 more messages added
-Process 19: 100 more messages added
-Process 28: 100 more messages added
-Process 37: 100 more messages added
-Process 46: 100 more messages added
-Process 55: 100 more messages added
-Process 64: 100 more messages added
-Process 73: 100 more messages added
-Process 82: 100 more messages added
-Process 91: 100 more messages added
-10 new producuers running...
-Process 100: 100 more messages added
-Process 109: 100 more messages added
-Process 118: 100 more messages added
-Process 127: 100 more messages added
+10 producers running...
+Process 10: 100 more messages added
+Process 20: 100 more messages added
+Process 29: 100 more messages added
+Process 38: 100 more messages added
+Process 47: 100 more messages added
+Process 56: 100 more messages added
+Process 65: 100 more messages added
+Process 74: 100 more messages added
+Process 83: 100 more messages added
+Process 92: 100 more messages added
+10 new producers running...
+Process 101: 100 more messages added
 ```
 
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
@@ -209,18 +209,17 @@ bash-4.3# ./produce.sh oldsound
 > Info: 10 producers running in parallel
 ---------------------------------------------------
 10 producers running...
-Process 10: 100 more messages added
-Process 20: 100 more messages added
-Process 29: 100 more messages added
-Process 38: 100 more messages added
-Process 47: 100 more messages added
-Process 56: 100 more messages added
-Process 65: 100 more messages added
-Process 74: 100 more messages added
-Process 86: 100 more messages added
-Process 83: 100 more messages added
+Process 582: 100 more messages added
+Process 591: 100 more messages added
+Process 600: 100 more messages added
+Process 609: 100 more messages added
+Process 618: 100 more messages added
+Process 627: 100 more messages added
+Process 636: 100 more messages added
+Process 645: 100 more messages added
+Process 654: 100 more messages added
+Process 663: 100 more messages added
 10 new producers running...
-Process 101: 100 more messages added
 ```
 
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
@@ -233,16 +232,81 @@ Once consumers and producers are started you should see messages in the Rabbitmq
 
 #### Stop the first node
 
+```
+$ make stop-node-1
+== Stop rabbitmq node 1 from cluster ==
+rmq_rmq1_1
+```
+
+![Rabbit cluster](./img/rabbitmq-node1-stop.png)
+
 #### Stop the second node
+
+```
+$ make stop-node-2 
+== Stop rabbitmq node 2 from cluster ==
+rmq_rmq2_1
+```
+
+![Rabbit cluster](./img/rabbitmq-node2-stop.png)
 
 #### Restart the first node
 
-#### Stop the third node
+```
+$ make resume-node-1
+== Stop rabbitmq node 1 from cluster ==
+rmq_rmq1_1
+```
+
+![Rabbit cluster](./img/rabbitmq-node1-restart.png)
 
 #### Restart all nodes
 
+```
+$ make start
+== Start App ==
+rmq_rmq1_1 is up-to-date
+Starting rmq_rmq2_1
+Starting rmq_rmq3_1
+rmq_haproxy_1 is up-to-date
+```
+
+![Rabbit cluster](./img/rabbitmq-all-restart.png)
+
 ### Network partition
 
-#### Exclude node 1 from the cluster network
+#### Exclude node 1 from the network cluster
+
+```
+$ make exclude-node-1
+== Exclude rabbitmq node 1 from cluster ==
+```
+
+#### Restore node 1 in the network cluster
+
+```
+$ make restore-node-1 
+== Exclude rabbit node 1 from cluster ==
+```
+
+**Partition between node 1 and node 2 and 3...**
+
+![Rabbit cluster](./img/rabbit-netpart-1.png)
+
+
+![Rabbit cluster](./img/rabbit-netpart-2.png)
+
+**...but all nodes are still running**
+
+![Rabbit cluster](./img/rabbitmq-netpart-ctop.png)
+
+
+[https://www.rabbitmq.com/partitions.html](https://www.rabbitmq.com/partitions.html)
+
+## TODO
+
+* More documentation.
+* Documentation on retry with swarrot.
+* Change rabbitmq docker image for more startup stability.
 
 

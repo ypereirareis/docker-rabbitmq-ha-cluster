@@ -21,43 +21,43 @@ services:
     networks:
       - default
 
-  rabbit1:
+  rmq1:
     image: harbur/rabbitmq-cluster
-    hostname: rabbit1
+    hostname: rmq1
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
       TCP_PORTS: "5672,15672"
     ports:
       - "127.0.0.1:1234:15672"
     networks:
-      - rabbit_1_2
-      - rabbit_3_1
+      - rmq_1_2
+      - rmq_3_1
 
-  rabbit2:
+  rmq2:
     image: harbur/rabbitmq-cluster
-    hostname: rabbit2
+    hostname: rmq2
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
-      CLUSTER_WITH: rabbit1
+      CLUSTER_WITH: rmq1
       TCP_PORTS: "5672"
     ports:
       - "127.0.0.1:1235:15672"
     networks:
-      - rabbit_1_2
-      - rabbit_2_3
+      - rmq_1_2
+      - rmq_2_3
 
-  rabbit3:
+  rmq3:
     image: harbur/rabbitmq-cluster
-    hostname: rabbit3
+    hostname: rmq3
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
-      CLUSTER_WITH: rabbit1
+      CLUSTER_WITH: rmq1
       TCP_PORTS: "5672"
     ports:
       - "127.0.0.1:1236:15672"
     networks:
-      - rabbit_3_1
-      - rabbit_2_3
+      - rmq_3_1
+      - rmq_2_3
 
   haproxy:
     image: dockercloud/haproxy:latest
@@ -68,25 +68,25 @@ services:
     expose:
       - 5672
     links:
-      - rabbit1
-      - rabbit2
-      - rabbit3
+      - rmq1
+      - rmq2
+      - rmq3
     ports:
       - '80:80'
       - '5672:5672'
     networks:
       - default
-      - rabbit_1_2
-      - rabbit_2_3
-      - rabbit_3_1
+      - rmq_1_2
+      - rmq_2_3
+      - rmq_3_1
 
 networks:
-  rabbit_1_2:
+  rmq_1_2:
     external:
-      name: rabbit_1_2
-  rabbit_2_3:
+      name: rmq_1_2
+  rmq_2_3:
     external:
-      name: rabbit_2_3
-  rabbit_3_1:
+      name: rmq_2_3
+  rmq_3_1:
     external:
-      name: rabbit_3_1
+      name: rmq_3_1
