@@ -275,14 +275,16 @@ rmq_haproxy_1 is up-to-date
 
 ### Network partition
 
-#### Exclude node 1 from the network cluster
+![Rabbit cluster](./img/rabbitmq_netpart.png)
+
+#### Exclude node 1 from the network cluster
 
 ```
 $ make exclude-node-1
 == Exclude rabbitmq node 1 from cluster ==
 ```
 
-#### Restore node 1 in the network cluster
+#### Restore node 1 in the network cluster
 
 ```
 $ make restore-node-1 
