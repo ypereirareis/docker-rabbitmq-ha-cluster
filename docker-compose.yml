@@ -61,6 +61,17 @@ services:
       - rmq_3_1
       - rmq_2_3
 
+  rmqN:
+    image: bijukunjummen/rabbitmq-server:3.6.5
+    environment:
+      ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      CLUSTERED: 'true'
+      CLUSTER_WITH: rmq1
+      TCP_PORTS: "5672"
+    networks:
+      - rmq_3_1
+      - rmq_2_3
+
   haproxy:
     image: dockercloud/haproxy:latest
     volumes:

@@ -97,6 +97,10 @@ restore-node-1:
 	@docker network connect rmq_1_2 rmq_rmq2_1
 	@docker network connect rmq_3_1 rmq_rmq3_1
 
+add-more-nodes:
+	@echo "== Adding a lot of nodes =="
+	@$(compose) scale rmqN=10
+
 # --------------------------------------------------------
 # COMPOSER
 # --------------------------------------------------------
