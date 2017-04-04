@@ -22,7 +22,7 @@ services:
       - default
 
   rmq1:
-    image: harbur/rabbitmq-cluster
+    image: bijukunjummen/rabbitmq-server:3.6.5
     hostname: rmq1
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
@@ -34,10 +34,11 @@ services:
       - rmq_3_1
 
   rmq2:
-    image: harbur/rabbitmq-cluster
+    image: bijukunjummen/rabbitmq-server:3.6.5
     hostname: rmq2
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      CLUSTERED: 'true'
       CLUSTER_WITH: rmq1
       TCP_PORTS: "5672"
     ports:
@@ -47,10 +48,11 @@ services:
       - rmq_2_3
 
   rmq3:
-    image: harbur/rabbitmq-cluster
+    image: bijukunjummen/rabbitmq-server:3.6.5
     hostname: rmq3
     environment:
       ERLANG_COOKIE: 'ck8FC0uJ9vePIhLr'
+      CLUSTERED: 'true'
       CLUSTER_WITH: rmq1
       TCP_PORTS: "5672"
     ports:

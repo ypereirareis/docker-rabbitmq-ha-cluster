@@ -169,6 +169,51 @@ Once consumers and producers are started you should see messages in the Rabbitmq
 
 ![Rabbit cluster](./img/rabbitmq-swarrot-run.png)
 
+#### Retry
+
+You must use a specific middleware configuration:
+
+```yml
+middleware_stack:
+    - configurator: swarrot.processor.signal_handler
+    - configurator: swarrot.processor.max_messages
+      extras:
+        max_messages: 100
+    - configurator: swarrot.processor.max_execution_time
+      extras:
+        max_execution_time: 30
+    - configurator: swarrot.processor.memory_limit
+      extras:
+          memory_limit: 50
+    - configurator: swarrot.processor.exception_catcher
+    - configurator: swarrot.processor.ack
+    - configurator: swarrot.processor.retry
+      extras:
+        retry_exchange: 'retry'
+        retry_attempts: 3
+        retry_routing_key_pattern: 'swarrot_retry_%%attempt%%'
+```
+
+Then you need to throw an exception in the consumer (NO ACK):
+
+```php
+    public function process(Message $message, array $options)
+    {
+        throw new \Exception('NO ACK');
+    }
+```
+
+![Rabbit cluster](./img/retry-1.png)
+
+![Rabbit cluster](./img/retry-2.png)
+
+![Rabbit cluster](./img/retry-3.png)
+
+![Rabbit cluster](./img/retry-4.png)
+
+![Rabbit cluster](./img/retry-5.png)
+
+
 ### php-amqplib/RabbitMqBundle
 
 #### Set the ha-policy
@@ -307,8 +352,21 @@ $ make restore-node-1
 
 ## TODO
 
+* Tests
 * More documentation.
-* Documentation on retry with swarrot.
-* Change rabbitmq docker image for more startup stability.
 
+## License
 
+Copyright 2017 ypereirareis
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
