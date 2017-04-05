@@ -166,16 +166,6 @@ bash-4.3# ./produce.sh
 10 producers running...
 Process 10: 100 more messages added
 Process 20: 100 more messages added
-Process 29: 100 more messages added
-Process 38: 100 more messages added
-Process 47: 100 more messages added
-Process 56: 100 more messages added
-Process 65: 100 more messages added
-Process 74: 100 more messages added
-Process 83: 100 more messages added
-Process 92: 100 more messages added
-10 new producers running...
-Process 101: 100 more messages added
 ```
 
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
@@ -263,15 +253,6 @@ bash-4.3# ./produce.sh oldsound
 10 producers running...
 Process 582: 100 more messages added
 Process 591: 100 more messages added
-Process 600: 100 more messages added
-Process 609: 100 more messages added
-Process 618: 100 more messages added
-Process 627: 100 more messages added
-Process 636: 100 more messages added
-Process 645: 100 more messages added
-Process 654: 100 more messages added
-Process 663: 100 more messages added
-10 new producers running...
 ```
 
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
