@@ -351,11 +351,25 @@ make add-more-nodes
 ## TODO
 
 * Tests
-* More documentation.
+
+## Resources
+
+* http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
+* https://odolbeau.fr/blog/benchmark-php-amqp-lib-amqp-extension-swarrot.html
+* https://github.com/docker/dockercloud-haproxy
+* https://github.com/bijukunjummen/docker-rabbitmq-cluster
+* https://www.rabbitmq.com/ha.html
+* https://www.rabbitmq.com/persistence-conf.html
+* https://github.com/php-amqplib/RabbitMqBundle
+* https://github.com/swarrot
+* http://symfony.com/doc/current/configuration/micro_kernel_trait.html
+* https://docs.docker.com/engine/userguide/networking/
+* https://www.nginx.com/resources/admin-guide/tcp-load-balancing/
+* https://github.com/alanxz/rabbitmq-c
 
 ## License
 
-Copyright 2017 ypereirareis
+Copyright 2017 Yannick Pereira-Reis
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
