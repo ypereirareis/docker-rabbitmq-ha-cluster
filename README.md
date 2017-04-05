@@ -3,17 +3,14 @@
 ## TLDR
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
 
-* HAProxy
-* Three nodes cluster
-* Persistent messages
-* Durable and mirrored exchanges
-* Durable and mirrored queues
-* HA custom policy
-* Parallel producers
-* Parallel consumers
+* HAProxy as a load balancer
+* N nodes cluster
+* **Durable**, **Mirrored** and **Persistent** Exchanges, Queues and Messages
+* HA custom policies
+* Parallel producers and consumers
+* **Node failures** and **network partition** experiment
 
 If you have questions, comments or suggestions please just create issues.
-
 
 ## The stack
 
