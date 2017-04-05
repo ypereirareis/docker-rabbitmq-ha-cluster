@@ -1,6 +1,5 @@
 # Docker Rabbitmq HA Cluster
 
-## TLDR
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
 
 * HAProxy as a load balancer
@@ -12,9 +11,24 @@ A docker stack to create, test and benchmark a rabbitmq cluster in high availabi
 
 If you have questions, comments or suggestions please just create issues.
 
-## The stack
+## The architecture
 
 ![Rabbit cluster](./img/rabbitmq.png)
+
+ * **3 RabbitMQ nodes** (but we can add a lot more)
+ * **3 docker networks** to be able to simulate network partition.
+ * **1 HAProxy node** to load balance request and to be "failure proof".
+ * **1 default network** for the consumers and producers to connect with nodes through HAProxy.
+ 
+| Tool        | Version |
+| -------------: |:-----|
+| RabbitMQ      | v3.6.5 |
+| HAProxy      | v1.6.3 |
+| PHP | v7.1 |
+| Docker | v1.12+ |
+| Docker-compose | v1.8+ |
+
+## The stack
 
 A lot of great tools (thanks to all awesome authors)
 
@@ -77,6 +91,8 @@ You can use, test or compare two php/symfony librairies.
 Simply use one of the library or both in the mean time.
 
 ### Swarrot/SwarrotBundle
+
+**With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
 
 #### Set the ha-policy
 
@@ -172,16 +188,6 @@ You must use a specific middleware configuration:
 
 ```yml
 middleware_stack:
-    - configurator: swarrot.processor.signal_handler
-    - configurator: swarrot.processor.max_messages
-      extras:
-        max_messages: 100
-    - configurator: swarrot.processor.max_execution_time
-      extras:
-        max_execution_time: 30
-    - configurator: swarrot.processor.memory_limit
-      extras:
-          memory_limit: 50
     - configurator: swarrot.processor.exception_catcher
     - configurator: swarrot.processor.ack
     - configurator: swarrot.processor.retry
@@ -212,6 +218,10 @@ Then you need to throw an exception in the consumer (NO ACK):
 
 
 ### php-amqplib/RabbitMqBundle
+
+**With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
+
+> With the "push API", applications have to indicate interest in consuming messages from a particular queue. When they do so, we say that they register a consumer or, simply put, subscribe to a queue. It is possible to have more than one consumer per queue or to register an exclusive consumer (excludes all other consumers from the queue while it is consuming).
 
 #### Set the ha-policy
 
