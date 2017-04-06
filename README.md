@@ -2,6 +2,14 @@
 
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
 
+| Tool        | Version |
+| -------------: |:-----|
+| RabbitMQ      | v3.6.5 |
+| HAProxy      | v1.6.3 |
+| PHP | v7.1 |
+| Docker | v1.12+ |
+| Docker-compose | v1.8+ |
+
 * HAProxy as a load balancer
 * N nodes cluster
 * **Durable**, **Mirrored** and **Persistent** Exchanges, Queues and Messages
@@ -15,18 +23,10 @@ If you have questions, comments or suggestions please just create issues.
 
 ![Rabbit cluster](./img/rabbitmq.png)
 
- * **3 RabbitMQ nodes** (but we can add a lot more)
+ * **3 RabbitMQ nodes** but we can add a lot more.
  * **3 docker networks** to be able to simulate network partition.
  * **1 HAProxy node** to load balance request and to be "failure proof".
  * **1 default network** for the consumers and producers to connect with nodes through HAProxy.
- 
-| Tool        | Version |
-| -------------: |:-----|
-| RabbitMQ      | v3.6.5 |
-| HAProxy      | v1.6.3 |
-| PHP | v7.1 |
-| Docker | v1.12+ |
-| Docker-compose | v1.8+ |
 
 ## The stack
 
@@ -55,6 +55,7 @@ With this stack you will be able to experiment:
 ## Setup / Start /Stop the cluster
 
 ```shell
+git clone git@github.com:ypereirareis/docker-rabbitmq-ha-cluster.git && cd docker-rabbitmq-ha-cluster
 make install
 make start
 make stop
@@ -91,6 +92,10 @@ You can use, test or compare two php/symfony librairies.
 Simply use one of the library or both in the mean time.
 
 ### Swarrot/SwarrotBundle
+
+Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
+
+Check this blog post: http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
 
 **With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
 
@@ -208,6 +213,8 @@ Then you need to throw an exception in the consumer (NO ACK):
 
 
 ### php-amqplib/RabbitMqBundle
+
+Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
 
 **With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
 
