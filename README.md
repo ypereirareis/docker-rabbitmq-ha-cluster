@@ -1,5 +1,7 @@
 # Docker Rabbitmq HA Cluster
 
+[Read the documentation](#documentation)
+
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
 
 | Tool        | Version |
@@ -51,6 +53,8 @@ With this stack you will be able to experiment:
 * Network partition
 * Messages persistency
 * Message NO ACK and retries
+
+# Documentation
 
 ## Setup / Start / Stop the cluster
 
