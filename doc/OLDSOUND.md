@@ -1,6 +1,6 @@
 # php-amqplib/RabbitMqBundle
 
-* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
+* Of course at this step, you must have followed the [startup instructions](https://github.com/ypereirareis/docker-rabbitmq-ha-cluster/tree/refacto-doc#setup--start--stop-the-cluster).
 * **With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
 
 > With the "push API", applications have to indicate interest in consuming messages from a particular queue. When they do so, we say that they register a consumer or, simply put, subscribe to a queue. It is possible to have more than one consumer per queue or to register an exclusive consumer (excludes all other consumers from the queue while it is consuming).
@@ -50,3 +50,5 @@ Process 591: 100 more messages added
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
 
 ![Rabbit cluster](./../img/rabbitmq-oldsound-run.png)
+
+[Go to Index](../README.md)

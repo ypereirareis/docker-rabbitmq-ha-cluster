@@ -1,6 +1,6 @@
 # Swarrot/SwarrotBundle
 
-* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
+* Of course at this step, you must have followed the [startup instructions](https://github.com/ypereirareis/docker-rabbitmq-ha-cluster/tree/refacto-doc#setup--start--stop-the-cluster).
 * Check this blog post: http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
 * **With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
 
@@ -12,7 +12,7 @@ $ make cluster-sw
 Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
 ```
 
-![Rabbit cluster](./img/rabbitmq-policy-swarrot.png)
+![Rabbit cluster](./../img/rabbitmq-policy-swarrot.png)
 
 ## Exchanges/Queues
 
@@ -45,7 +45,7 @@ Create binding between exchange retry and queue swarrot (with routing_key: swarr
 Create binding between exchange swarrot and queue swarrot (with routing_key: swarrot)
 ```
 
-![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
+![Rabbit cluster](./../img/rabbitmq-swarrot-ex-q.png)
 
 
 ## Consumers
@@ -80,7 +80,7 @@ Process 20: 100 more messages added
 
 Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
 
-![Rabbit cluster](./img/rabbitmq-swarrot-run.png)
+![Rabbit cluster](./../img/rabbitmq-swarrot-run.png)
 
 ## Retry
 
@@ -106,12 +106,14 @@ Then you need to throw an exception in the consumer (NO ACK):
     }
 ```
 
-![Rabbit cluster](./img/retry-1.png)
+![Rabbit cluster](./../img/retry-1.png)
 
-![Rabbit cluster](./img/retry-2.png)
+![Rabbit cluster](./../img/retry-2.png)
 
-![Rabbit cluster](./img/retry-3.png)
+![Rabbit cluster](./../img/retry-3.png)
 
-![Rabbit cluster](./img/retry-4.png)
+![Rabbit cluster](./../img/retry-4.png)
 
-![Rabbit cluster](./img/retry-5.png)
+![Rabbit cluster](./../img/retry-5.png)
+
+[Go to Index](../README.md)
