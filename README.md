@@ -52,7 +52,7 @@ With this stack you will be able to experiment:
 * Messages persistency
 * Message NO ACK and retries
 
-## Setup / Start /Stop the cluster
+## Setup / Start / Stop the cluster
 
 ```shell
 git clone git@github.com:ypereirareis/docker-rabbitmq-ha-cluster.git && cd docker-rabbitmq-ha-cluster
@@ -93,175 +93,11 @@ Simply use one of the library or both in the mean time.
 
 ### Swarrot/SwarrotBundle
 
-* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
-* Check this blog post: http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
-* **With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
-
-#### Set the ha-policy
-
-```shell
-$ make cluster-sw
-== SWARROT Rabbit Clustering ==
-Setting policy "ha-swarrot" for pattern "^swarrot" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
-```
-
-![Rabbit cluster](./img/rabbitmq-policy-swarrot.png)
-
-#### Exchanges/Queues
-
-With Swarrot, exchanges and queues are not created by the library or the bundle.
-YOu need to create everything manually or with command line.
-
-```shell
-$ make init-sw
-== Rabbit init ==
-IMPORTANT : Waiting for nothing because no  env var defined !!!
-With DL: false
-With Unroutable: false
-Create exchange swarrot
-Create exchange dl
-Create queue swarrot
-Create queue swarrot_dl
-Create binding between exchange dl and queue swarrot_dl (with routing_key: swarrot)
-Create exchange retry
-Create queue swarrot_retry_1
-Create binding between exchange retry and queue swarrot_retry_1 (with routing_key: swarrot_retry_1)
-Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
-Create exchange retry
-Create queue swarrot_retry_2
-Create binding between exchange retry and queue swarrot_retry_2 (with routing_key: swarrot_retry_2)
-Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
-Create exchange retry
-Create queue swarrot_retry_3
-Create binding between exchange retry and queue swarrot_retry_3 (with routing_key: swarrot_retry_3)
-Create binding between exchange retry and queue swarrot (with routing_key: swarrot)
-Create binding between exchange swarrot and queue swarrot (with routing_key: swarrot)
-```
-
-![Rabbit cluster](./img/rabbitmq-swarrot-ex-q.png)
-
-
-#### Consumers
-
-```shell
-$ make bash
-== Connect into PHP container ==
-IMPORTANT : Waiting for nothing because no  env var defined !!!
-bash-4.3# ./consume.sh 
----------------------------------------------------
-> Type: swarrot
-> Info: 30 consumers running in parallel reading 100 messages each before finishing
----------------------------------------------------
-30 consumers running...
-```
-
-#### Producers
-
-```shell
-$ make bash
-== Connect into PHP container ==
-IMPORTANT : Waiting for nothing because no  env var defined !!!
-bash-4.3# ./produce.sh 
----------------------------------------------------
-> Type: swarrot
-> Info: 10 producers running in parallel
----------------------------------------------------
-10 producers running...
-Process 10: 100 more messages added
-Process 20: 100 more messages added
-```
-
-Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
-
-![Rabbit cluster](./img/rabbitmq-swarrot-run.png)
-
-#### Retry
-
-You must use a specific middleware configuration:
-
-```yml
-middleware_stack:
-    - configurator: swarrot.processor.exception_catcher
-    - configurator: swarrot.processor.ack
-    - configurator: swarrot.processor.retry
-      extras:
-        retry_exchange: 'retry'
-        retry_attempts: 3
-        retry_routing_key_pattern: 'swarrot_retry_%%attempt%%'
-```
-
-Then you need to throw an exception in the consumer (NO ACK):
-
-```php
-    public function process(Message $message, array $options)
-    {
-        throw new \Exception('NO ACK');
-    }
-```
-
-![Rabbit cluster](./img/retry-1.png)
-
-![Rabbit cluster](./img/retry-2.png)
-
-![Rabbit cluster](./img/retry-3.png)
-
-![Rabbit cluster](./img/retry-4.png)
-
-![Rabbit cluster](./img/retry-5.png)
-
+[Read the documentation for Swarrot/SwarrotBundle](./doc/SWARROT.md)
 
 ### php-amqplib/RabbitMqBundle
 
-* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
-* **With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
-
-> With the "push API", applications have to indicate interest in consuming messages from a particular queue. When they do so, we say that they register a consumer or, simply put, subscribe to a queue. It is possible to have more than one consumer per queue or to register an exclusive consumer (excludes all other consumers from the queue while it is consuming).
-
-#### Set the ha-policy
-
-```shell
-$ make cluster-os
-== SWARROT Rabbit Clustering ==
-Setting policy "ha-oldsound" for pattern "^oldsound" to " {\"ha-mode\":\"all\",\"ha-sync-mode\":\"automatic\"}" with priority "0" ...
-```
-
-![Rabbit cluster](./img/rabbitmq-policy-oldsound.png)
-
-#### Consumers
-
-```shell
-$ make bash
-== Connect into PHP container ==
-IMPORTANT : Waiting for nothing because no  env var defined !!!
-bash-4.3# ./consume.sh oldsound
----------------------------------------------------
-> Type: oldsound
-> Info: 30 consumers running in parallel reading 100 messages each before finishing
----------------------------------------------------
-30 consumers running...
-```
-
-![Rabbit cluster](./img/rabbitmq-oldsound-consumers.png)
-
-#### Producers
-
-```shell
-$ make bash
-== Connect into PHP container ==
-IMPORTANT : Waiting for nothing because no  env var defined !!!
-bash-4.3# ./produce.sh oldsound
----------------------------------------------------
-> Type: oldsound
-> Info: 10 producers running in parallel
----------------------------------------------------
-10 producers running...
-Process 582: 100 more messages added
-Process 591: 100 more messages added
-```
-
-Once consumers and producers are started you should see messages in the Rabbitmq Management Plugin interface for all nodes.
-
-![Rabbit cluster](./img/rabbitmq-oldsound-run.png)
+[Read the documentation for php-amqplib/RabbitMqBundle](./doc/OLDSOUND.md)
 
 ## Tests/Benckmark
 
