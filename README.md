@@ -93,11 +93,9 @@ Simply use one of the library or both in the mean time.
 
 ### Swarrot/SwarrotBundle
 
-Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
-
-Check this blog post: http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
-
-**With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
+* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
+* Check this blog post: http://blog.eleven-labs.com/fr/publier-consommer-reessayer-des-messages-rabbitmq/
+* **With Swarrot we use a PULL/POLL strategy, consumers are not registered in RabbitMQ**
 
 #### Set the ha-policy
 
@@ -214,9 +212,8 @@ Then you need to throw an exception in the consumer (NO ACK):
 
 ### php-amqplib/RabbitMqBundle
 
-Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
-
-**With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
+* Of course at this step, you must have followed the [startup instructions](#setup--start-stop-the-cluster).
+* **With RabbitMqBundle we use a PUSH strategy, consumers are registered in RabbitMQ**
 
 > With the "push API", applications have to indicate interest in consuming messages from a particular queue. When they do so, we say that they register a consumer or, simply put, subscribe to a queue. It is possible to have more than one consumer per queue or to register an exclusive consumer (excludes all other consumers from the queue while it is consuming).
 
