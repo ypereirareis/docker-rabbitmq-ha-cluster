@@ -7,6 +7,12 @@ make start
 make stop
 ```
 
+:broken_heart: **Do not set container names manually or the auto configuration of HAProxy will not work anymore.**   
+:green_heart: You can change the `docker-compose -p` option (project variable) in [Makefile](../Makefile), but you will need to update some `make` targets:
+
+* https://github.com/ypereirareis/docker-rabbitmq-ha-cluster/blob/master/Makefile#L19-L23
+* https://github.com/ypereirareis/docker-rabbitmq-ha-cluster/blob/master/Makefile#L66-L98
+
 Once the setup process is over, check everything is ok (sometimes the startup process fails):
 
 ```
