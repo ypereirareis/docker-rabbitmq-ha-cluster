@@ -1,9 +1,13 @@
-# Setup / Start / Stop the cluster
+# Setup / Start the RabbitMQ cluster
 
 ```shell
 git clone git@github.com:ypereirareis/docker-rabbitmq-ha-cluster.git && cd docker-rabbitmq-ha-cluster
-make install
-make start
+make install && make start
+```
+
+# Stop the RabbitMQ cluster
+
+```shell
 make stop
 ```
 
@@ -40,7 +44,5 @@ Access the Management Plugin interface for nodes:
 
 ![Rabbit cluster](./../img/rabbitmq_cluster_start.png)
 
-You can use, test or compare two php/symfony librairies.
-Simply use one of the library or both in the mean time.
-
+[Next section (Swarrot/SwarrotBundle)](./SWARROT.md)   
 [Go to Index](../README.md)
