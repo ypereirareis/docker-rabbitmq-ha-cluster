@@ -82,3 +82,12 @@ old_sound_rabbit_mq:
             exchange_options: {name: 'oldsound', type: direct}
             queue_options:    {name: 'oldsound', arguments: {'x-ha-policy': ['S', 'ha-oldsound']}}
             callback:         oldsound_consumer
+
+m6_statsd:
+    servers:
+        default:
+            address: 'udp://graphite'
+            port:     8125
+    clients:
+        default:
+            servers:   ["default"]        # the 'default' client will use only the default server

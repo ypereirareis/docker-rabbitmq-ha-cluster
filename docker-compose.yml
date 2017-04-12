@@ -18,8 +18,11 @@ services:
     volumes:
       - ./var/logs/app:/var/www/html/var/logs:rw
       - ./sf:/var/www/html:rw
+    depends_on:
+      - graphite
     networks:
       - default
+      - graphite
 
   rmq1:
     image: bijukunjummen/rabbitmq-server:3.6.5
@@ -93,7 +96,22 @@ services:
       - rmq_2_3
       - rmq_3_1
 
+  graphite:
+    image: hopsoft/graphite-statsd
+    ports:
+      - '8080:80'
+      - '2003-2004:2003-2004'
+      - '2023-2024:2023-2024'
+      - '8125:8125/udp'
+      - '8126:8126'
+    networks:
+      - default
+      - graphite
+
 networks:
+  graphite:
+    external:
+      name: graphite
   rmq_1_2:
     external:
       name: rmq_1_2

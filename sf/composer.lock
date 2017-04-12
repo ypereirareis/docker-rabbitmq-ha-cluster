@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "f49cb2f477b8cce8bddf137856d7a675",
-    "content-hash": "668b9d4a9b1eda630ae8963fea07d09a",
+    "hash": "0fa6c5996da9663136394a9c650920a3",
+    "content-hash": "e3bd294957abba0082aeb264f5cfc14a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -405,6 +405,97 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
+        },
+        {
+            "name": "m6web/statsd",
+            "version": "v1.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/Statsd.git",
+                "reference": "dbc7e320e94640bd9787f1498a9eb6ba6909845d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/Statsd/zipball/dbc7e320e94640bd9787f1498a9eb6ba6909845d",
+                "reference": "dbc7e320e94640bd9787f1498a9eb6ba6909845d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "atoum/atoum": "~2.0",
+                "m6web/coke": "~1.2",
+                "m6web/symfony2-coding-standard": "~1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\Statsd\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Component easing the statsd usage",
+            "keywords": [
+                "m6web",
+                "php",
+                "statsd"
+            ],
+            "time": "2017-02-03 08:22:10"
+        },
+        {
+            "name": "m6web/statsd-bundle",
+            "version": "v2.14.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/StatsdBundle.git",
+                "reference": "c6270bdf501dd73d06031d8c304d1ec1197906da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/StatsdBundle/zipball/c6270bdf501dd73d06031d8c304d1ec1197906da",
+                "reference": "c6270bdf501dd73d06031d8c304d1ec1197906da",
+                "shasum": ""
+            },
+            "require": {
+                "m6web/statsd": "^1.3",
+                "php": ">=5.4.0",
+                "symfony/property-access": ">=2.2"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8|^3.0",
+                "m6web/coke": "~1.2",
+                "m6web/symfony2-coding-standard": "~1.2",
+                "symfony/symfony": "~2.3|~3.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "M6Web\\Bundle\\StatsdBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Add statds metrics in your sf2 app. Allow you to bind metrics on any sf2 event.",
+            "keywords": [
+                "bundle",
+                "m6web",
+                "statsd",
+                "symfony"
+            ],
+            "time": "2017-03-09 13:04:42"
         },
         {
             "name": "monolog/monolog",
@@ -1486,7 +1577,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "m6web/statsd-bundle": 0
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

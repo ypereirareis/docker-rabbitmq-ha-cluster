@@ -46,6 +46,9 @@ class TestCommand extends ContainerAwareCommand
         while(true) {
             try {
                 $publisherString = 'my_publisher_1';
+                $this->getContainer()->get('m6_statsd')->increment('producer.bundle');
+                $this->getContainer()->get('m6_statsd')->timing('producer.memory', memory_get_usage(true)/1024/1024);
+                echo (memory_get_usage(true)/1024/1024)."\n";
                 $messagePublisher->publish($publisherString, $message);
             } catch (\AMQPConnectionException $ex) {
                 if ($connectionRetry++ < 5) {
@@ -54,6 +57,7 @@ class TestCommand extends ContainerAwareCommand
                     continue;
                 }
                 $io->warning("Exit with error: ".$ex->getMessage());
+                $this->getContainer()->get('m6_statsd')->increment('producer.exception');
                 break;
             } catch (\Exception $exception) {
                 if ($exceptionRetry++ < 5) {
@@ -62,6 +66,7 @@ class TestCommand extends ContainerAwareCommand
                     continue;
                 }
                 $io->warning("Exit with error: ".$exception->getMessage());
+                $this->getContainer()->get('m6_statsd')->increment('producer.exception');
                 break;
             }
 

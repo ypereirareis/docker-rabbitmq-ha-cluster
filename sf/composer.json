@@ -5,7 +5,8 @@
         "symfony/monolog-bundle": "^3.0",
         "swarrot/swarrot-bundle": "1.4.1",
         "odolbeau/rabbit-mq-admin-toolkit": "^3.2",
-        "php-amqplib/rabbitmq-bundle": "^1.12"
+        "php-amqplib/rabbitmq-bundle": "^1.12",
+        "m6web/statsd-bundle": "@stable"
     },
     "autoload": {
         "psr-4": {

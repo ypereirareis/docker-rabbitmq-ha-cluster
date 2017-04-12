@@ -14,13 +14,14 @@ build:
 
 start:
 	@echo "== Start App =="
-	@$(compose) up -d haproxy
+	@$(compose) up -d haproxy graphite
 
 network:
 	@echo "== Create networks =="
 	@docker network create rmq_1_2 || true
 	@docker network create rmq_2_3 || true
 	@docker network create rmq_3_1 || true
+	@docker network create graphite || true
 
 state:
 	@echo "== Print state of containers =="
