@@ -97,9 +97,10 @@ services:
       - rmq_3_1
 
   graphite:
-    image: hopsoft/graphite-statsd
+    image: kamon/grafana_graphite
     ports:
       - '8080:80'
+      - '8081:81'
       - '2003-2004:2003-2004'
       - '2023-2024:2023-2024'
       - '8125:8125/udp'
