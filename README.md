@@ -1,4 +1,4 @@
-# Docker Rabbitmq HA Cluster
+# Docker RabbitMQ HA Cluster
 
 [Read the documentation](#documentation)
 
@@ -20,6 +20,8 @@ A docker stack to create, test and benchmark a rabbitmq cluster in high availabi
 * **Node failures** and **network partition** experiment
 
 If you have questions, comments or suggestions please just create issues.
+
+:warning: Tested (works well) on Linux but bad performance on OSX (docker for MAC)
 
 ## The architecture
 
