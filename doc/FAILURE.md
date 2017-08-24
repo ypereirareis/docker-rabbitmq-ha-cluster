@@ -45,4 +45,11 @@ rmq_haproxy_1 is up-to-date
 
 ![Rabbit cluster](./../img/rabbitmq-all-restart.png)
 
-[Go to Index](../README.md)
+[Go to Index](../README.md#documentation)  
+
+[Setup](./SETUP.md)  
+[Swarrot/SwarrotBundle](./SWARROT.md)  
+[OldSound/RabbitMqBundle](./OLDSOUND.md)  
+[Node failures](./FAILURE.md)  
+[Network partition](./PARTITION.md)  
+[Big cluster](./BIG.md)  

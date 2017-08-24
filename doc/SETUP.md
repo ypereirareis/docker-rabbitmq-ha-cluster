@@ -44,5 +44,12 @@ Access the Management Plugin interface for nodes:
 
 ![Rabbit cluster](./../img/rabbitmq_cluster_start.png)
 
-[Next section (Swarrot/SwarrotBundle)](./SWARROT.md)   
-[Go to Index](../README.md)
+
+[Go to Index](../README.md#documentation)  
+
+[Setup](./SETUP.md)  
+[Swarrot/SwarrotBundle](./SWARROT.md)  
+[OldSound/RabbitMqBundle](./OLDSOUND.md)  
+[Node failures](./FAILURE.md)  
+[Network partition](./PARTITION.md)  
+[Big cluster](./BIG.md)  

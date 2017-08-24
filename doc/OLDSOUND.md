@@ -51,4 +51,11 @@ Once consumers and producers are started you should see messages in the Rabbitmq
 
 ![Rabbit cluster](./../img/rabbitmq-oldsound-run.png)
 
-[Go to Index](../README.md)
+[Go to Index](../README.md#documentation)  
+
+[Setup](./SETUP.md)  
+[Swarrot/SwarrotBundle](./SWARROT.md)  
+[OldSound/RabbitMqBundle](./OLDSOUND.md)  
+[Node failures](./FAILURE.md)  
+[Network partition](./PARTITION.md)  
+[Big cluster](./BIG.md)  
