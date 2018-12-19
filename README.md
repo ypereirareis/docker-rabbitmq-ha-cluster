@@ -1,5 +1,7 @@
 # Docker RabbitMQ HA Cluster
 
+:warning: This project **IS NOT** swarm compatible, sorry... but PR welcome :warning:
+
 [Read the documentation](#documentation)
 
 A docker stack to create, test and benchmark a rabbitmq cluster in high availability configuration:
